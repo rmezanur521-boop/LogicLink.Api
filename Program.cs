@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<ICircuitService, CircuitService>();
 builder.Services.AddSingleton<PresenceTracker>();
+builder.Services.AddScoped<ICircuitSimulationService, CircuitSimulationService>();
 
 const string CorsPolicyName = "AllowFrontend";
 var allowedOrigins = builder.Configuration
