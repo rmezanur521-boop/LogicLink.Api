@@ -2,11 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using LogicLink.Api.Services;
+using LogicLink.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICircuitService, CircuitService>();
 
 const string CorsPolicyName = "AllowFrontend";
 var allowedOrigins = builder.Configuration
