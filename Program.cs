@@ -1,9 +1,11 @@
-﻿using LogicLink.Api.Data;
-using Microsoft.EntityFrameworkCore;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using LogicLink.Api.Data;
+using LogicLink.Api.Hubs;
+using LogicLink.Api.Realtime;
 using LogicLink.Api.Services;
 using LogicLink.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ICircuitService, CircuitService>();
+builder.Services.AddSingleton<PresenceTracker>();
 
 const string CorsPolicyName = "AllowFrontend";
 var allowedOrigins = builder.Configuration
@@ -50,5 +53,6 @@ app.UseHttpsRedirection();
 app.UseCors(CorsPolicyName);
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<CircuitHub>("/hubs/circuit");
 
 app.Run();

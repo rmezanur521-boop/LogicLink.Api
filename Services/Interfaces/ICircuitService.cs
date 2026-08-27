@@ -12,4 +12,9 @@ public interface ICircuitService
     Task<bool> SoftDeleteAsync(Guid id);
     Task<bool> RestoreAsync(Guid id);
     Task<bool> PermanentDeleteAsync(Guid id);
+    Task<GateDto> AddGateAsync(Guid circuitId, GateDto gate);
+    Task<GateDto?> MoveGateAsync(Guid circuitId, Guid gateId, double x, double y, double rotation);
+    Task<bool> DeleteGateAsync(Guid circuitId, Guid gateId);
+    Task<WireDto> AddWireAsync(Guid circuitId, WireDto wire);
+    Task<bool> DeleteWireAsync(Guid circuitId, Guid wireId);
 }
